@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <input type="text" id="myInput">
+    <script>
+        var myInput = document.getElementById('myInput');
+
+        myInput.addEventListener('keyup', function(e) {
+            splitInputHandler();
+        }, false);
+
+        function splitInputHandler(gap, divider) {
+            var gap = gap || 4;
+            var divider = divider || ' ';
+            var value = myInput.value.replace(new RegExp(divider, 'g'), '');
+            var valueArray = value.split('');
+            var length = valueArray.length;
+            var quotient = Math.floor(length / gap);
+            var remainder = length % gap;
+            if (length >= gap) {
+                // 给整数倍位置插入分隔符
+                for (var i = 0; i < quotient; i += 1) {
+                    valueArray.splice(length - remainder - gap * i, 0, divider);
+                }
+                if (remainder === 0) {
+                    // 处理掉末尾的空格
+                    valueArray.splice(valueArray.length - 1, 1);
+                }
+                myInput.value = valueArray.join('');
+            }
+        }
+    </script>
+</body>
+
+</html>
